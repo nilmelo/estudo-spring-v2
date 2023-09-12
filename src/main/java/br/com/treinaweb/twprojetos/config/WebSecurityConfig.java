@@ -24,29 +24,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-            .antMatchers("/adminlte/**").permitAll()
-            .antMatchers("/img/**").permitAll()
-            .antMatchers("/js/**").permitAll()
-            .antMatchers("/plugins/**").permitAll()
-            .antMatchers("/**/cadastrar").hasAuthority(Perfil.ADMIN.toString())
-            .antMatchers("/**/editar").hasAuthority(Perfil.ADMIN.toString())
-            .antMatchers("/**/excluir").hasAuthority(Perfil.ADMIN.toString())
-            .anyRequest().authenticated();
+        http.authorizeRequests(requests -> requests
+                .antMatchers("/adminlte/**").permitAll()
+                .antMatchers("/img/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/plugins/**").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
+                .antMatchers("/**/cadastrar").hasAuthority(Perfil.ADMIN.toString())
+                .antMatchers("/**/editar").hasAuthority(Perfil.ADMIN.toString())
+                .antMatchers("/**/excluir").hasAuthority(Perfil.ADMIN.toString())
+                .anyRequest().authenticated());
 
-        http.formLogin()
-            .loginPage("/login")
-            .defaultSuccessUrl("/clientes")
-            .permitAll();
+        http.csrf(csrf -> csrf
+                .ignoringAntMatchers("/api/v1/**"));
 
-        http.logout()
-            .logoutRequestMatcher(
-                new AntPathRequestMatcher("/logout", "GET")
-            )
-            .logoutSuccessUrl("/login");
+        http.formLogin(login -> login
+                .loginPage("/login")
+                .defaultSuccessUrl("/clientes")
+                .permitAll());
 
-        http.rememberMe()
-            .key("chaverememberMe");
+        http.logout(logout -> logout
+                .logoutRequestMatcher(
+                        new AntPathRequestMatcher("/logout", "GET")
+                )
+                .logoutSuccessUrl("/login"));
+
+        http.rememberMe(me -> me
+                .key("chaverememberMe"));
     }
 
     @Override

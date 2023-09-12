@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.treinaweb.twprojetos.api.dto.CargoDTO;
+import br.com.treinaweb.twprojetos.api.mapper.CargoMapper;
 import br.com.treinaweb.twprojetos.entidades.Cargo;
 import br.com.treinaweb.twprojetos.excecoes.CargoNaoEncontradoException;
 import br.com.treinaweb.twprojetos.excecoes.CargoPossuiFuncionariosException;
@@ -19,6 +21,9 @@ public class CargoServico {
 
     @Autowired
     private FuncionarioRepositorio funcionarioRepositorio;
+
+    @Autowired
+    private CargoMapper cargoMapeador;
 
     public List<Cargo> buscarTodos() {
         return cargoRepositorio.findAll();
@@ -35,8 +40,23 @@ public class CargoServico {
         return cargoRepositorio.save(cargo);
     }
 
+    public Cargo cadastrar(CargoDTO cargoDTO) {
+        Cargo cargo = cargoMapeador.converterParaEntidade(cargoDTO);
+
+        return cargoRepositorio.save(cargo);
+    }
+
     public Cargo atualizar(Cargo cargo, Long id) {
         buscarPorId(id);
+
+        return cargoRepositorio.save(cargo);
+    }
+
+    public Cargo atualizar(CargoDTO cargoDTO, Long id) {
+        buscarPorId(id);
+
+        Cargo cargo = cargoMapeador.converterParaEntidade(cargoDTO);
+        cargo.setId(id);
 
         return cargoRepositorio.save(cargo);
     }
