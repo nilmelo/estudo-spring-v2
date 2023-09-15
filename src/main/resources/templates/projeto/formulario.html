@@ -94,7 +94,7 @@
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
                     <label for="orcamentoEstimado">Orçamento</label>
-                    <input type="text" class="form-control" th:field="*{orcamento}">
+                    <input type="number" step="any" min="1" class="form-control" th:field="*{orcamento}">
                     <ul>
                       <li class="text-danger" th:each="erro : ${#fields.errors('orcamento')}" th:text="${erro}"></li>
                     </ul>
@@ -103,7 +103,7 @@
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
                     <label for="totalGasto">Gastos</label>
-                    <input type="text" class="form-control" th:field="*{gastos}">
+                    <input type="number" step="any" min="1" class="form-control" th:field="*{gastos}">
                     <ul>
                       <li class="text-danger" th:each="erro : ${#fields.errors('gastos')}" th:text="${erro}"></li>
                     </ul>
@@ -137,14 +137,6 @@
   <th:block th:fragment="scripts">
     <script th:src="@{/plugins/select2/js/select2.full.min.js}"></script>
     <script th:src="@{/plugins/jquery-mask/jquery.mask.min.js}"></script>
-    <script>
-      $('.select2bs4').select2({
-        theme: 'bootstrap4'
-      })
-
-      $('#orcamento').mask('#.##0,00', {reverse: true});
-      $('#gastos').mask('#.##0,00', {reverse: true});
-    </script>
   </th:block>
 </body>
 
