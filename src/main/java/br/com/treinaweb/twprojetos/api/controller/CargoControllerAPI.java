@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.treinaweb.twprojetos.api.docs.CargoControllerAPIDoc;
 import br.com.treinaweb.twprojetos.api.dto.CargoDTO;
 import br.com.treinaweb.twprojetos.api.hateoas.CargoAssembler;
 import br.com.treinaweb.twprojetos.entidades.Cargo;
@@ -30,7 +30,7 @@ import br.com.treinaweb.twprojetos.servicos.CargoServico;
 
 @RestController
 @RequestMapping("/api/v1/cargos")
-public class CargoControllerAPI {
+public class CargoControllerAPI implements CargoControllerAPIDoc {
     
     @Autowired
     private CargoServico cargoServico;
